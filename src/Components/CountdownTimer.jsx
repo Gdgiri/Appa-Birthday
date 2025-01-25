@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from "react";
+import CelebrationModal from "./CelebrationModel";
 
 function CountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState("");
+  const [countdown, setCountdown] = useState(10); // Start from 10
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
 
   useEffect(() => {
-    const targetDate = new Date("2025-01-26T00:00:00");
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate - now;
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000); // Decrease by 1 every second
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((difference / (1000 * 60)) % 60);
-      const seconds = Math.floor((difference / 1000) % 60);
-
-      setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearTimeout(timer);
+    } else {
+      setShowModal(true); // Show modal when countdown reaches 0
+    }
+  }, [countdown]);
 
   return (
-    <div className="mb-4">
-      <h2 className="h4">Countdown to Your Birthday:</h2>
-      <p className="fs-3 text-success fw-bold">{timeLeft}</p>
+    <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-gradient text-white">
+      <h2 className="h4 mb-3">Countdown Timer:</h2>
+      <p className="display-1 fw-bold text-warning">{countdown}</p>
+
+      {/* Show Popup Modal */}
+      <CelebrationModal show={showModal} handleClose={handleCloseModal} />
     </div>
   );
 }
