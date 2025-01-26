@@ -34,7 +34,7 @@ function CelebrationModal({ show, handleClose }) {
             }}
           />
         </div>
-        <h1 className="fw-bold text-success mt-4">🎉 Happy Birthday! 🎂</h1>
+        <h1 className="fw-bold text-success mt-4">🎉 Happy Birthday Appa! 🎂</h1>
         <p className="fs-5 text-secondary">Enjoy your special day!</p>
         <Button variant="success" onClick={handleClose}>
           Close
